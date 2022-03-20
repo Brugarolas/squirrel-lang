@@ -54,6 +54,7 @@ SINGLE_ARG_FUNC(tan)
 SINGLE_ARG_FUNC(atan)
 TWO_ARGS_FUNC(atan2)
 TWO_ARGS_FUNC(pow)
+SINGLE_ARG_FUNC(round)
 SINGLE_ARG_FUNC(floor)
 SINGLE_ARG_FUNC(ceil)
 SINGLE_ARG_FUNC(exp)
@@ -71,6 +72,7 @@ static const SQRegFunction mathlib_funcs[] = {
     _DECL_FUNC(atan,2,_SC(".n")),
     _DECL_FUNC(atan2,3,_SC(".nn")),
     _DECL_FUNC(pow,3,_SC(".nn")),
+    _DECL_FUNC(round,2,_SC(".n")),
     _DECL_FUNC(floor,2,_SC(".n")),
     _DECL_FUNC(ceil,2,_SC(".n")),
     _DECL_FUNC(exp,2,_SC(".n")),
