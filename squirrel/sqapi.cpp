@@ -1508,6 +1508,25 @@ SQRESULT sq_getclass(HSQUIRRELVM v,SQInteger idx)
     return SQ_OK;
 }
 
+SQClass* sq_getclassptr(HSQUIRRELVM v,SQInteger idx)
+{
+    SQObjectPtr *o = NULL;
+    if(!sq_aux_gettypedarg(v, idx, OT_INSTANCE, &o)) return NULL;
+    return _instance(*o)->_class;
+}
+
+void sq_pushclass(HSQUIRRELVM v,SQClass* klass)
+{
+    v->Push(SQObjectPtr(klass));
+}
+
+void sq_pushinstance(HSQUIRRELVM v,SQClass* klass, SQUserPointer instancePtr)
+{
+    sq_pushclass(v, klass);
+    sq_createinstance(v, -1);
+    sq_setinstanceup(v, -1, instancePtr);
+}
+
 SQRESULT sq_createinstance(HSQUIRRELVM v,SQInteger idx)
 {
     SQObjectPtr *o = NULL;

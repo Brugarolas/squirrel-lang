@@ -19,6 +19,15 @@
     return 1; \
 }
 
+#define THREE_ARGS_FUNC(_funcname) static SQInteger math_##_funcname(HSQUIRRELVM v){ \
+    SQFloat p1,p2,p3; \
+    sq_getfloat(v,2,&p1); \
+    sq_getfloat(v,3,&p2); \
+    sq_getfloat(v,4,&p3); \
+    sq_pushfloat(v,(SQFloat)_funcname(p1,p2,p3)); \
+    return 1; \
+}
+
 static SQInteger math_srand(HSQUIRRELVM v)
 {
     SQInteger i;
@@ -42,6 +51,14 @@ static SQInteger math_abs(HSQUIRRELVM v)
     return 1;
 }
 
+static SQInteger math_mod(HSQUIRRELVM v)
+{
+    SQFloat f;
+    sq_getfloat(v,2,&f);
+    sq_pushfloat(v,modff(f, &f));
+    return 1;
+}
+
 SINGLE_ARG_FUNC(sqrt)
 SINGLE_ARG_FUNC(fabs)
 SINGLE_ARG_FUNC(sin)
@@ -54,9 +71,15 @@ SINGLE_ARG_FUNC(tan)
 SINGLE_ARG_FUNC(atan)
 TWO_ARGS_FUNC(atan2)
 TWO_ARGS_FUNC(pow)
+SINGLE_ARG_FUNC(round)
 SINGLE_ARG_FUNC(floor)
 SINGLE_ARG_FUNC(ceil)
 SINGLE_ARG_FUNC(exp)
+TWO_ARGS_FUNC(copysign)
+TWO_ARGS_FUNC(hypot)
+SINGLE_ARG_FUNC(cbrt)
+THREE_ARGS_FUNC(fma)
+TWO_ARGS_FUNC(fmod)
 
 #define _DECL_FUNC(name,nparams,tycheck) {_SC(#name),math_##name,nparams,tycheck}
 static const SQRegFunction mathlib_funcs[] = {
@@ -71,6 +94,7 @@ static const SQRegFunction mathlib_funcs[] = {
     _DECL_FUNC(atan,2,_SC(".n")),
     _DECL_FUNC(atan2,3,_SC(".nn")),
     _DECL_FUNC(pow,3,_SC(".nn")),
+    _DECL_FUNC(round,2,_SC(".n")),
     _DECL_FUNC(floor,2,_SC(".n")),
     _DECL_FUNC(ceil,2,_SC(".n")),
     _DECL_FUNC(exp,2,_SC(".n")),
@@ -78,6 +102,12 @@ static const SQRegFunction mathlib_funcs[] = {
     _DECL_FUNC(rand,1,NULL),
     _DECL_FUNC(fabs,2,_SC(".n")),
     _DECL_FUNC(abs,2,_SC(".n")),
+    _DECL_FUNC(copysign,3,_SC(".nn")),
+    _DECL_FUNC(hypot,3,_SC(".nn")),
+    _DECL_FUNC(cbrt,2,_SC(".n")),
+    _DECL_FUNC(fma,4,_SC(".nnn")),
+    _DECL_FUNC(fmod,3,_SC(".nn")),
+    _DECL_FUNC(mod,2,_SC(".n")),
     {NULL,(SQFUNCTION)0,0,NULL}
 };
 #undef _DECL_FUNC

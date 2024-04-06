@@ -4,3 +4,4 @@ lib/
 
 # Folders created at documentation generation
 doc/build/
+*.bak
